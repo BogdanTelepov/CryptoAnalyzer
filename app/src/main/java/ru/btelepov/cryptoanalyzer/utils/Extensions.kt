@@ -21,12 +21,3 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
 }
 
 
-fun EditText.listenChanges(block: (text: String) -> Unit) {
-    addTextChangedListener(object : SimpleTextWatcher() {
-        override fun afterTextChanged(s: Editable?) {
-            block.invoke(s.toString())
-        }
-    })
-
-
-}
