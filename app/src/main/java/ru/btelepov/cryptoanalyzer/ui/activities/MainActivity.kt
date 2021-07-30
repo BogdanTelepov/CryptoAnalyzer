@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val bottomNavView = binding.bottomNavigationView
         val navGraphs = listOf(
             R.navigation.graph_home,
-            R.navigation.graph_search
+          
         )
 
         val controller = bottomNavView.setupWithNavController(

@@ -1,5 +1,32 @@
 package ru.btelepov.cryptoanalyzer.utils
 
-fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(this).toDouble()
+import android.text.Editable
+import android.widget.EditText
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+
+
 
 fun Double.format(digits: Int) = "%.${digits}f".format(this)
+
+
+fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+    observe(lifecycleOwner, object : Observer<T> {
+        override fun onChanged(t: T?) {
+            removeObserver(this)
+            observer.onChanged(t)
+        }
+    })
+}
+
+
+fun EditText.listenChanges(block: (text: String) -> Unit) {
+    addTextChangedListener(object : SimpleTextWatcher() {
+        override fun afterTextChanged(s: Editable?) {
+            block.invoke(s.toString())
+        }
+    })
+
+
+}

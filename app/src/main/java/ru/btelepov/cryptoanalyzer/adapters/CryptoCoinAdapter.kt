@@ -2,31 +2,27 @@ package ru.btelepov.cryptoanalyzer.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
+
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.btelepov.cryptoanalyzer.databinding.CoinItemLayoutBinding
 import ru.btelepov.cryptoanalyzer.models.CryptoCoin
+
+import ru.btelepov.cryptoanalyzer.utils.CustomDiffUtil
 import ru.btelepov.cryptoanalyzer.utils.format
-import ru.btelepov.cryptoanalyzer.utils.round
 
 
 class CryptoCoinAdapter : RecyclerView.Adapter<CryptoCoinAdapter.MyViewHolder>() {
 
+
+    private var listCoins = emptyList<CryptoCoin>()
+
     class MyViewHolder(val binding: CoinItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private val differCallBack = object : DiffUtil.ItemCallback<CryptoCoin>() {
-        override fun areItemsTheSame(oldItem: CryptoCoin, newItem: CryptoCoin): Boolean {
-            return oldItem == newItem
-        }
 
-        override fun areContentsTheSame(oldItem: CryptoCoin, newItem: CryptoCoin): Boolean {
-            return oldItem.id == newItem.id
-        }
-    }
 
-    val differ = AsyncListDiffer(this, differCallBack)
+
 
 
     override fun onCreateViewHolder(
@@ -43,13 +39,20 @@ class CryptoCoinAdapter : RecyclerView.Adapter<CryptoCoinAdapter.MyViewHolder>()
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = differ.currentList[position]
+        val currentItem = listCoins[position]
         holder.binding.tvItemName.text = currentItem.name
         holder.binding.tvItemSymbol.text = currentItem.symbol
         holder.binding.tvItemPrice.text = "${currentItem.quote.uSD.price.format(2)} $"
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return listCoins.size
+    }
+
+    fun setData(newData: List<CryptoCoin>) {
+        val diffUtil = CustomDiffUtil(listCoins, newData)
+        val diffUtilResult = DiffUtil.calculateDiff(diffUtil)
+        listCoins = newData
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 }
