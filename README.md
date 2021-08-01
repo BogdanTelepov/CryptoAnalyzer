@@ -1,5 +1,6 @@
 
-![GitHub Cards Preview](https://github.com/BogdanTelepov/CryptoAnalyzer/blob/main/screenshots/main_screen.png?https://github.com/BogdanTelepov/CryptoAnalyzer/blob/main/screenshots/search_screen_1.pngraw=true)
+![GitHub Cards Preview](https://github.com/BogdanTelepov/CryptoAnalyzer/blob/main/screenshots/main_screen.png
+https://github.com/BogdanTelepov/CryptoAnalyzer/blob/main/screenshots/search_screen_1.png?raw=true)
 
 # 🗞 Crypto Analyzer
 **Crypto Analyzer** is a Minimal Crypto Analyzer 🗞 Android application with Modern Android development tools.
