@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.utils
+package ru.btelepov.cryptoanalyzer.network
 
 sealed class NetworkResult<T>(
     val data: T? = null,

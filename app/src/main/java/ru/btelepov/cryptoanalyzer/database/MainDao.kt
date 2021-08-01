@@ -6,18 +6,18 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
-import ru.btelepov.cryptoanalyzer.models.CryptoCoin
+import ru.btelepov.cryptoanalyzer.models.CryptoCoinItem
 
 @Dao
 interface MainDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCoinEntity(cryptoCoinsList: List<CryptoCoin>)
+    suspend fun insertCoinEntity(cryptoCoinsListItem: List<CryptoCoinItem>)
 
     @Query("SELECT * FROM crypto_coins_table")
-    fun readAllCoins(): LiveData<List<CryptoCoin>>
+    fun readAllCoins(): LiveData<List<CryptoCoinItem>>
 
     @Query("SELECT * FROM crypto_coins_table WHERE name LIKE :searchQuery")
-    fun searchCoin(searchQuery: String): LiveData<List<CryptoCoin>>
+    fun searchCoin(searchQuery: String): LiveData<List<CryptoCoinItem>>
 
 }

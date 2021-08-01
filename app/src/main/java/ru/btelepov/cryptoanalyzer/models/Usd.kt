@@ -3,10 +3,10 @@ package ru.btelepov.cryptoanalyzer.models
 
 import com.google.gson.annotations.SerializedName
 
-data class USD(
+data class Usd(
 
 
     @SerializedName("price")
-    val price: Double,
+    val price: Double?,
 
 )

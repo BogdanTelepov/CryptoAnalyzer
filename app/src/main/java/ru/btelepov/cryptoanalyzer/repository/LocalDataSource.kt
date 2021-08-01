@@ -3,20 +3,20 @@ package ru.btelepov.cryptoanalyzer.repository
 import androidx.lifecycle.LiveData
 import ru.btelepov.cryptoanalyzer.database.MainDao
 
-import ru.btelepov.cryptoanalyzer.models.CryptoCoin
+import ru.btelepov.cryptoanalyzer.models.CryptoCoinItem
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(private val mainDao: MainDao) {
 
-    fun readAllCoins(): LiveData<List<CryptoCoin>> {
+    fun readAllCoins(): LiveData<List<CryptoCoinItem>> {
         return mainDao.readAllCoins()
     }
 
-    suspend fun insertCoinEntity(cryptoCoin: List<CryptoCoin>) {
-        mainDao.insertCoinEntity(cryptoCoin)
+    suspend fun insertCoinEntity(cryptoCoinItem: List<CryptoCoinItem>) {
+        mainDao.insertCoinEntity(cryptoCoinItem)
     }
 
-    fun searchCoin(query: String): LiveData<List<CryptoCoin>> {
+    fun searchCoin(query: String): LiveData<List<CryptoCoinItem>> {
         return mainDao.searchCoin(query)
     }
 }

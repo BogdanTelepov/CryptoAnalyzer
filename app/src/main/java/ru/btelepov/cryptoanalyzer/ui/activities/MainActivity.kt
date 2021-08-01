@@ -7,7 +7,7 @@ import androidx.navigation.NavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.btelepov.cryptoanalyzer.R
 import ru.btelepov.cryptoanalyzer.databinding.ActivityMainBinding
-import ru.btelepov.cryptoanalyzer.utils.setupWithNavController
+import ru.btelepov.cryptoanalyzer.extensions.setupWithNavController
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

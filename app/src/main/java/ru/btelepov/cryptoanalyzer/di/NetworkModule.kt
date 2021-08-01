@@ -29,7 +29,7 @@ object NetworkModule {
                 .newBuilder()
                 .addQueryParameter(
                     "CMC_PRO_API_KEY",
-                    ru.btelepov.cryptoanalyzer.BuildConfig.API_KEY
+                    BuildConfig.API_KEY
                 )
                 .build()
 

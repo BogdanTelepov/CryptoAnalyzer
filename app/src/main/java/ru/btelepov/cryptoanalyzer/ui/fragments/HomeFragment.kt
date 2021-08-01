@@ -9,14 +9,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
 import ru.btelepov.cryptoanalyzer.R
 import ru.btelepov.cryptoanalyzer.adapters.CryptoCoinAdapter
 import ru.btelepov.cryptoanalyzer.databinding.FragmentHomeBinding
-import ru.btelepov.cryptoanalyzer.models.CryptoCoin
-import ru.btelepov.cryptoanalyzer.utils.NetworkResult
-import ru.btelepov.cryptoanalyzer.utils.observeOnce
+import ru.btelepov.cryptoanalyzer.network.NetworkResult
+import ru.btelepov.cryptoanalyzer.extensions.observeOnce
 import ru.btelepov.cryptoanalyzer.viewModels.HomeFragmentViewModel
 
 @AndroidEntryPoint
@@ -30,25 +31,26 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private val cryptoCoinAdapter: CryptoCoinAdapter by lazy { CryptoCoinAdapter() }
 
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-
-        setHasOptionsMenu(true)
-
-
-
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         setupRecyclerView()
+
+        // send api call every 2 min for refresh actual data
         fetchDataFromApi()
+
 
 //        lifecycleScope.launchWhenStarted {
 //            readFromDatabase()
@@ -58,8 +60,13 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
 
+
+
+
+
     private fun readFromDatabase() {
         lifecycleScope.launch {
+
             homeViewModel.readAllCoins.observeOnce(viewLifecycleOwner) { data ->
                 if (data.isNotEmpty()) {
                     Log.d("HOME_FRAGMENT", "read Database Call!")
@@ -76,8 +83,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun fetchDataFromApi() {
         Log.d("HOME_FRAGMENT", "API Call!")
+
         homeViewModel.fetchLastCryptoCurrency()
-        homeViewModel.cryptoResponse.observe(viewLifecycleOwner) { response ->
+        homeViewModel.cryptoCoinResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
@@ -99,7 +107,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun loadCache() {
+
         lifecycleScope.launch {
+
             homeViewModel.readAllCoins.observe(viewLifecycleOwner) { data ->
                 if (data != null) {
                     cryptoCoinAdapter.setData(data)

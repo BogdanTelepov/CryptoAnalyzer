@@ -10,24 +10,24 @@ class CustomTypeConverter {
     var gson = Gson()
 
     @TypeConverter
-    fun cryptoResponseToString(cryptoResponse: CryptoResponse): String {
-        return gson.toJson(cryptoResponse)
+    fun cryptoResponseToString(cryptoCoinResponse: CryptoCoinResponse): String {
+        return gson.toJson(cryptoCoinResponse)
     }
 
     @TypeConverter
-    fun toCryptoResponse(data: String): CryptoResponse {
-        val listType = object : TypeToken<CryptoResponse>() {}.type
+    fun toCryptoResponse(data: String): CryptoCoinResponse {
+        val listType = object : TypeToken<CryptoCoinResponse>() {}.type
         return gson.fromJson(data, listType)
     }
 
     @TypeConverter
-    fun cryptoCoinToString(cryptoCoin: CryptoCoin): String {
-        return gson.toJson(cryptoCoin)
+    fun cryptoCoinToString(cryptoCoinItem: CryptoCoinItem): String {
+        return gson.toJson(cryptoCoinItem)
     }
 
     @TypeConverter
-    fun fromStringToCryptoCoin(data: String): CryptoCoin {
-        val listType = object : TypeToken<CryptoCoin>() {}.type
+    fun fromStringToCryptoCoin(data: String): CryptoCoinItem {
+        val listType = object : TypeToken<CryptoCoinItem>() {}.type
         return gson.fromJson(data, listType)
     }
 
@@ -53,12 +53,12 @@ class CustomTypeConverter {
         return gson.fromJson(data, listType)
     }
     @TypeConverter
-    fun usdToString(usd:USD):String{
+    fun usdToString(usd:Usd):String{
         return gson.toJson(usd)
     }
     @TypeConverter
-    fun fromStringToUsd(data:String):USD{
-        val listType = object :TypeToken<USD>(){}.type
+    fun fromStringToUsd(data:String):Usd{
+        val listType = object :TypeToken<Usd>(){}.type
         return gson.fromJson(data,listType)
     }
 }

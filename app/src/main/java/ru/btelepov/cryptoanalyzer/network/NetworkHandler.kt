@@ -1,9 +1,10 @@
-package ru.btelepov.cryptoanalyzer.utils
+package ru.btelepov.cryptoanalyzer.network
 
 import android.content.Context
 import android.net.NetworkCapabilities
 
 import dagger.hilt.android.qualifiers.ApplicationContext
+import ru.btelepov.cryptoanalyzer.extensions.connectivityManager
 import javax.inject.Inject
 import javax.inject.Singleton
 

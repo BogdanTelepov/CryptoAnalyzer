@@ -4,10 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-import ru.btelepov.cryptoanalyzer.models.CryptoCoin
+import ru.btelepov.cryptoanalyzer.models.CryptoCoinItem
 
 @Database(
-    entities = [CryptoCoin::class], version = 1, exportSchema = false
+    entities = [CryptoCoinItem::class], version = 1, exportSchema = false
 )
 
 @TypeConverters(CustomTypeConverter::class)

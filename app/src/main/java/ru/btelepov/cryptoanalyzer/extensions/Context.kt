@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.utils
+package ru.btelepov.cryptoanalyzer.extensions
 
 import android.content.Context
 import android.net.ConnectivityManager

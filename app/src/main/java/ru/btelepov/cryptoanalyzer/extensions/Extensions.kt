@@ -1,7 +1,6 @@
-package ru.btelepov.cryptoanalyzer.utils
+package ru.btelepov.cryptoanalyzer.extensions
 
-import android.text.Editable
-import android.widget.EditText
+
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

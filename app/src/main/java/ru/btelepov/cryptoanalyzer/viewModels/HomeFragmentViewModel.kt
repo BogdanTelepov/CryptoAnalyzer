@@ -9,14 +9,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-import ru.btelepov.cryptoanalyzer.models.CryptoCoin
-import ru.btelepov.cryptoanalyzer.models.CryptoResponse
+import ru.btelepov.cryptoanalyzer.models.CryptoCoinItem
+import ru.btelepov.cryptoanalyzer.models.CryptoCoinResponse
 import ru.btelepov.cryptoanalyzer.repository.Repository
-import ru.btelepov.cryptoanalyzer.utils.NetworkHandler
-import ru.btelepov.cryptoanalyzer.utils.NetworkResult
+import ru.btelepov.cryptoanalyzer.network.NetworkHandler
+import ru.btelepov.cryptoanalyzer.network.NetworkResult
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -28,16 +29,17 @@ class HomeFragmentViewModel
 
     /** Room */
 
-    val readAllCoins: LiveData<List<CryptoCoin>> = repository.locale.readAllCoins()
+
+    val readAllCoins: LiveData<List<CryptoCoinItem>> get() = repository.locale.readAllCoins()
 
 
-    private fun insertCoinEntity(cryptoCoinList: List<CryptoCoin>) {
+    private fun insertCoinEntity(cryptoCoinItemList: List<CryptoCoinItem>) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.locale.insertCoinEntity(cryptoCoinList)
+            repository.locale.insertCoinEntity(cryptoCoinItemList)
         }
     }
 
-    fun searchFromDatabase(query: String): LiveData<List<CryptoCoin>> {
+    fun searchFromDatabase(query: String): LiveData<List<CryptoCoinItem>> {
         return repository.locale.searchCoin(query)
     }
 
@@ -45,41 +47,43 @@ class HomeFragmentViewModel
     /** Retrofit */
 
     private val networkHandler: NetworkHandler by lazy { NetworkHandler(application.applicationContext) }
-    private var _cryptoResponse: MutableLiveData<NetworkResult<CryptoResponse>> = MutableLiveData()
-    val cryptoResponse: LiveData<NetworkResult<CryptoResponse>> get() = _cryptoResponse
+    private var _cryptoCoinResponse: MutableLiveData<NetworkResult<CryptoCoinResponse>> =
+        MutableLiveData()
+    val cryptoCoinResponse: LiveData<NetworkResult<CryptoCoinResponse>> get() = _cryptoCoinResponse
 
     fun fetchLastCryptoCurrency() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
+
             getLastCurrency()
         }
     }
 
 
     private suspend fun getLastCurrency() {
-        _cryptoResponse.value = NetworkResult.Loading()
+        _cryptoCoinResponse.postValue(NetworkResult.Loading())
 
         if (networkHandler.isNetworkAvailable()) {
             try {
                 val response = repository.remote.getLastCryptoCurrency()
-                _cryptoResponse.value = handleResponse(response)
+                _cryptoCoinResponse.postValue(handleResponse(response))
 
-                val cryptoCoinItem = _cryptoResponse.value!!.data
+                val cryptoCoinItem = _cryptoCoinResponse.value!!.data
                 if (cryptoCoinItem != null) {
                     offlineCacheCoins(cryptoCoinItem)
                 }
 
             } catch (e: Exception) {
-                _cryptoResponse.value = NetworkResult.Error("Что то пошло не так...")
+                _cryptoCoinResponse.postValue(NetworkResult.Error("Что то пошло не так..."))
                 Log.d("HOME_VIEW_MODEL", e.message.toString())
             }
         } else {
-            _cryptoResponse.value = NetworkResult.Error("Нет интернет соединения")
+            _cryptoCoinResponse.postValue(NetworkResult.Error("Нет интернет соединения"))
         }
 
     }
 
-    private fun offlineCacheCoins(cryptoResponse: CryptoResponse) {
-        val coinEntity = cryptoResponse.data
+    private fun offlineCacheCoins(cryptoCoinResponse: CryptoCoinResponse) {
+        val coinEntity = cryptoCoinResponse.data
         insertCoinEntity(coinEntity)
     }
 
