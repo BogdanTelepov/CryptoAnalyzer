@@ -18,7 +18,7 @@
 
 # Package Structure
     
-    www.thecodemonks.techbytes   # Root Package
+    # Root Package
     .
     ├── data                              # For data handling.
     │   ├── database                      # Local Persistence Database. Room (SQLite) database
