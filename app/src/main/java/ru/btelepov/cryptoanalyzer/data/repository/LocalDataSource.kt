@@ -1,7 +1,7 @@
-package ru.btelepov.cryptoanalyzer.repository
+package ru.btelepov.cryptoanalyzer.data.repository
 
 import androidx.lifecycle.LiveData
-import ru.btelepov.cryptoanalyzer.database.MainDao
+import ru.btelepov.cryptoanalyzer.data.database.MainDao
 
 import ru.btelepov.cryptoanalyzer.models.CryptoCoinItem
 import javax.inject.Inject

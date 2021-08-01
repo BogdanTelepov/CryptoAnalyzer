@@ -12,8 +12,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import ru.btelepov.cryptoanalyzer.database.MainDao
-import ru.btelepov.cryptoanalyzer.database.MainDatabase
+import ru.btelepov.cryptoanalyzer.data.database.MainDao
+import ru.btelepov.cryptoanalyzer.data.database.MainDatabase
 import ru.btelepov.cryptoanalyzer.models.CryptoCoinItem
 import ru.btelepov.cryptoanalyzer.models.Quote
 import ru.btelepov.cryptoanalyzer.models.Usd

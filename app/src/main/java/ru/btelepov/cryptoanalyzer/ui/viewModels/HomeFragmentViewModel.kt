@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.viewModels
+package ru.btelepov.cryptoanalyzer.ui.viewModels
 
 
 import android.app.Application
@@ -9,15 +9,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 import ru.btelepov.cryptoanalyzer.models.CryptoCoinItem
 import ru.btelepov.cryptoanalyzer.models.CryptoCoinResponse
-import ru.btelepov.cryptoanalyzer.repository.Repository
-import ru.btelepov.cryptoanalyzer.network.NetworkHandler
-import ru.btelepov.cryptoanalyzer.network.NetworkResult
+import ru.btelepov.cryptoanalyzer.data.repository.Repository
+import ru.btelepov.cryptoanalyzer.data.network.NetworkHandler
+import ru.btelepov.cryptoanalyzer.data.network.NetworkResult
 import java.lang.Exception
 import javax.inject.Inject
 

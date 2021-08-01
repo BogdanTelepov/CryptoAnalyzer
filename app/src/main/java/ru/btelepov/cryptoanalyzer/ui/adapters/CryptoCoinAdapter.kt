@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.adapters
+package ru.btelepov.cryptoanalyzer.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.btelepov.cryptoanalyzer.databinding.CoinItemLayoutBinding
 import ru.btelepov.cryptoanalyzer.models.CryptoCoinItem
 
-import ru.btelepov.cryptoanalyzer.utils.CustomDiffUtil
 import ru.btelepov.cryptoanalyzer.extensions.format
 
 

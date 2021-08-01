@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.utils
+package ru.btelepov.cryptoanalyzer.ui.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 

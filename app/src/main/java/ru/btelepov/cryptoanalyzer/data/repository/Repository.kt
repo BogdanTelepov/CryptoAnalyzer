@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.repository
+package ru.btelepov.cryptoanalyzer.data.repository
 
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject

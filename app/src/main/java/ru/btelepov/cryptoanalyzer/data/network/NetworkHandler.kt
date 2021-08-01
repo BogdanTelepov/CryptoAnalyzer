@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.network
+package ru.btelepov.cryptoanalyzer.data.network
 
 import android.content.Context
 import android.net.NetworkCapabilities

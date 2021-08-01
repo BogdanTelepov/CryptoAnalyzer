@@ -15,12 +15,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 import kotlinx.coroutines.launch
 import ru.btelepov.cryptoanalyzer.R
-import ru.btelepov.cryptoanalyzer.adapters.CryptoCoinAdapter
+import ru.btelepov.cryptoanalyzer.ui.adapters.CryptoCoinAdapter
 import ru.btelepov.cryptoanalyzer.databinding.FragmentHomeBinding
-import ru.btelepov.cryptoanalyzer.network.NetworkResult
+import ru.btelepov.cryptoanalyzer.data.network.NetworkResult
 import ru.btelepov.cryptoanalyzer.extensions.observeOnce
-import ru.btelepov.cryptoanalyzer.network.ConnectionListener
-import ru.btelepov.cryptoanalyzer.viewModels.HomeFragmentViewModel
+import ru.btelepov.cryptoanalyzer.data.network.ConnectionListener
+import ru.btelepov.cryptoanalyzer.ui.viewModels.HomeFragmentViewModel
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener,

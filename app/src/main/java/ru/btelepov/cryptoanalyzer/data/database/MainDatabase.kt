@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.database
+package ru.btelepov.cryptoanalyzer.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

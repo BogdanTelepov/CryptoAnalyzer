@@ -1,4 +1,4 @@
-package ru.btelepov.cryptoanalyzer.network
+package ru.btelepov.cryptoanalyzer.data.network
 
 import retrofit2.Response
 import retrofit2.http.GET

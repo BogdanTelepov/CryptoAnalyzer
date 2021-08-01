@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".network.ConnectionListener"
+            android:name="ru.btelepov.cryptoanalyzer.data.network.ConnectionListener"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.net.com.CONNECTIVITY_CHANGE" />

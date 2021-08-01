@@ -11,7 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.btelepov.cryptoanalyzer.BuildConfig
-import ru.btelepov.cryptoanalyzer.network.CryptoApi
+import ru.btelepov.cryptoanalyzer.data.network.CryptoApi
 import java.util.concurrent.TimeUnit
 
 
