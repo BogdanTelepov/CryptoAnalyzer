@@ -15,7 +15,7 @@ class CustomTypeConverter {
     }
 
     @TypeConverter
-    fun toCryptoResponse(data: String): CryptoCoinResponse {
+    fun fromStringToCryptoResponse(data: String): CryptoCoinResponse {
         val listType = object : TypeToken<CryptoCoinResponse>() {}.type
         return gson.fromJson(data, listType)
     }
