@@ -1,5 +1,5 @@
 
-![GitHub Cards Preview](https://github.com/BogdanTelepov/CryptoAnalyzer/blob/main/screenshots/main_screen.png?raw=true)
+![GitHub Cards Preview](https://github.com/BogdanTelepov/CryptoAnalyzer/blob/main/screenshots/main_screen.png?https://github.com/BogdanTelepov/CryptoAnalyzer/blob/main/screenshots/search_screen_1.pngraw=true)
 
 # 🗞 Crypto Analyzer
 **Crypto Analyzer** is a Minimal Crypto Analyzer 🗞 Android application with Modern Android development tools.
@@ -64,8 +64,4 @@ This app uses [***MVVM (Model View View-Model)***](https://developer.android.com
 
 ![](https://github.com/TheCodeMonks/Notes-App/blob/master/screenshots/ANDROID%20ROOM%20DB%20DIAGRAM.jpg)
 
-
-## Contribute
-If you want to contribute to this library, you're always welcome!
-See [Contributing Guidelines](https://github.com/TheCodeMonks/Notzz-App/blob/master/CONTRIBUTION.md). 
 
