@@ -1,5 +1,8 @@
 package ru.btelepov.cryptoanalyzer.ui.fragments
 
+
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -9,19 +12,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
+
 import kotlinx.coroutines.launch
 import ru.btelepov.cryptoanalyzer.R
 import ru.btelepov.cryptoanalyzer.adapters.CryptoCoinAdapter
 import ru.btelepov.cryptoanalyzer.databinding.FragmentHomeBinding
 import ru.btelepov.cryptoanalyzer.network.NetworkResult
 import ru.btelepov.cryptoanalyzer.extensions.observeOnce
+import ru.btelepov.cryptoanalyzer.network.ConnectionListener
 import ru.btelepov.cryptoanalyzer.viewModels.HomeFragmentViewModel
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
+class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
+    ConnectionListener.ConnectivityReceiverListener {
+
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = checkNotNull(_binding)
@@ -29,8 +33,6 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private val homeViewModel: HomeFragmentViewModel by viewModels()
 
     private val cryptoCoinAdapter: CryptoCoinAdapter by lazy { CryptoCoinAdapter() }
-
-
 
 
     override fun onCreateView(
@@ -47,21 +49,31 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         setupRecyclerView()
+        ConnectionListener.connectivityReceiverListener = this
+        requireActivity().registerReceiver(
+            ConnectionListener(),
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
 
-        // send api call every 2 min for refresh actual data
         fetchDataFromApi()
+
 
 
 //        lifecycleScope.launchWhenStarted {
 //            readFromDatabase()
 //        }
 
+        refreshData()
+
 
     }
 
-
-
-
+    private fun refreshData() {
+        binding.swipeLayout.setOnRefreshListener {
+            Log.d("HOME_FRAGMENT", "Api call")
+            homeViewModel.fetchLastCryptoCurrency()
+        }
+    }
 
 
     private fun readFromDatabase() {
@@ -85,22 +97,25 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         Log.d("HOME_FRAGMENT", "API Call!")
 
         homeViewModel.fetchLastCryptoCurrency()
+
         homeViewModel.cryptoCoinResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.visibility = View.GONE
+
+                    binding.swipeLayout.isRefreshing = false
                     response.data?.let { cryptoCoinAdapter.setData(it.data.toList()) }
                 }
 
                 is NetworkResult.Error -> {
-                    binding.progressBar.visibility = View.GONE
+
+                    binding.swipeLayout.isRefreshing = false
                     loadCache()
                     Log.d("HOME_FRAGMENT", "loadCache Call!")
-                    Snackbar.make(binding.root, response.message.toString(), Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, response.message.toString(), Snackbar.LENGTH_LONG)
                         .show()
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding.swipeLayout.isRefreshing = true
                 }
             }
         }
@@ -117,6 +132,22 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
     }
+
+
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        showNetworkMessage(isConnected)
+    }
+
+    private fun showNetworkMessage(isConnected: Boolean) {
+        if (!isConnected) {
+            Snackbar.make(binding.root, "No Internet Connection", Snackbar.LENGTH_LONG).show()
+        } else {
+
+            Snackbar.make(binding.root, "You are Online", Snackbar.LENGTH_LONG).show()
+
+        }
+    }
+
 
     private fun setupRecyclerView() {
         binding.rvListCoins.adapter = cryptoCoinAdapter
